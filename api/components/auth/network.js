@@ -5,14 +5,12 @@ const controller = require('./index')
 
 const router = express.Router()
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   controller.login(req.body.username, req.body.password)
     .then(token => {
       response.success(req, res, token, 200)
     })
-    .catch(e => {
-      response.error(req, res, 'Información Invalida', 400)
-    })
+    .catch(next)
 }
 
 router.post('/login', login)
