@@ -3,7 +3,10 @@ const config = require('../config')
 const error = require('../utils/error')
 const secret = config.jwt.secret
 
-const sign = (data) => jwt.sign(data, secret)
+const sign = async (data) => {
+  console.log('sign :: ', data)
+  return await jwt.sign(data, secret)
+}
 
 const check = {
   own: (req, owner) => {
@@ -11,6 +14,9 @@ const check = {
     console.log('decodeHeader :: ', decoded)
 
     if (decoded.id !== owner) throw error('No puedes editar este usuario2', 401)
+  },
+  logged: (req) => {
+    const decoded = decodeHeader(req)
 
   }
 }
